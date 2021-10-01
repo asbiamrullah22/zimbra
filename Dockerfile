@@ -12,6 +12,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y install \
   net-tools \
   sudo \
   rsyslog \
+  openssh-server \
   unzip
 
 VOLUME ["/opt/zimbra"]
