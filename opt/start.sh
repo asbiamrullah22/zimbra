@@ -21,7 +21,7 @@ user=root
 EOF
 sudo service dnsmasq restart
 
-##Creating the Zimbra 8.8.15 Config File ##
+##Creating the Zimbra Collaboration Config File ##
 touch /opt/zimbra-install/installZimbraScript
 cat <<EOF >/opt/zimbra-install/installZimbraScript
 AVDOMAIN="$DOMAIN"
@@ -118,8 +118,8 @@ zimbra_ldap_userdn="uid=zimbra,cn=admins,cn=zimbra"
 zimbra_require_interprocess_security="1"
 INSTALL_PACKAGES="zimbra-core zimbra-ldap zimbra-logger zimbra-mta zimbra-snmp zimbra-store zimbra-apache zimbra-spell zimbra-memcached zimbra-proxy"
 EOF
-##Install the Zimbra 8.8.15 ##
-echo "Downloading Zimbra 8.8.15 8.8.15"
+##Install the Zimbra Collaboration ##
+echo "Downloading Zimbra Collaboration 8.8.15"
 wget -O /opt/zimbra-install/zimbra-zcs-8.8.15.tar.gz https://files.zimbra.com/downloads/8.8.15_GA/zcs-8.8.15_GA_3869.UBUNTU16_64.20190918004220.tgz
 
 echo "Extracting files from the archive"
@@ -128,22 +128,24 @@ tar xzvf /opt/zimbra-install/zimbra-zcs-8.8.15.tar.gz -C /opt/zimbra-install/
 echo "Update package cache"
 apt update
 
-echo "Installing Zimbra 8.8.15 just the Software"
+echo "Installing Zimbra Collaboration just the Software"
 cd /opt/zimbra-install/zcs-* && ./install.sh -s < /opt/zimbra-install/installZimbra-keystrokes
 
-echo "Installing Zimbra 8.8.15 injecting the configuration"
+echo "Installing Zimbra Collaboration injecting the configuration"
 /opt/zimbra/libexec/zmsetup.pl -c /opt/zimbra-install/installZimbraScript
 
-echo "Fix bug zimbra"
+su - zimbra -c 'zmcontrol restart'
+
+echo "Fix Bug zimbra"
 /opt/zimbra/libexec/zmsyslogsetup
 su - zimbra "/opt/zimbra/bin/zmsshkeygen"
 su - zimbra "/opt/zimbra/bin/zmupdateauthkeys"
 /etc/init.d/rsyslog restart
 /etc/init.d/cron restart
 su - zimbra "/opt/zimbra/libexec/zmloggerinit"
-su - zimbra -c 'zmcontrol restart'
 
-echo "You can access now to your Zimbra 8.8.15 Server"
+su - zimbra -c 'zmcontrol restart'
+echo "You can access now to your Zimbra Collaboration Server"
 
 if [[ $1 == "-d" ]]; then
   while true; do sleep 1000; done
