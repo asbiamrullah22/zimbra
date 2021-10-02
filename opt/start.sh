@@ -134,9 +134,6 @@ cd /opt/zimbra-install/zcs-* && ./install.sh -s < /opt/zimbra-install/installZim
 echo "Installing Zimbra 8.8.15 injecting the configuration"
 /opt/zimbra/libexec/zmsetup.pl -c /opt/zimbra-install/installZimbraScript
 
-
-su - zimbra -c 'zmcontrol restart'
-
 echo "Fix bug zimbra"
 /opt/zimbra/libexec/zmsyslogsetup
 su - zimbra "/opt/zimbra/bin/zmsshkeygen"
