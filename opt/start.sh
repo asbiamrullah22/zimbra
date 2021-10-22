@@ -3,7 +3,7 @@
 sleep 5
 HOSTNAME=$(hostname -a)
 DOMAIN=$(hostname -d)
-CONTAINERIP=$(`hostname -I`| grep 'state UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1  -d'/')
+CONTAINERIP=$(ip addr| grep 'state UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1  -d'/')
 RANDOMHAM=$(date +%s|sha256sum|base64|head -c 10)
 RANDOMSPAM=$(date +%s|sha256sum|base64|head -c 10)
 RANDOMVIRUS=$(date +%s|sha256sum|base64|head -c 10)
