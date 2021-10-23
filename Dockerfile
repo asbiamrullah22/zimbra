@@ -28,12 +28,4 @@ COPY opt /opt/
 
 COPY etc /etc/
 
-RUN mv /etc/init.d/rsyslog /tmp/
-RUN curl -k https://raw.githubusercontent.com/asbiamrullah22/zimbra/master/rsyslog > /etc/init.d/rsyslog
-RUN chmod +x /etc/init.d/rsyslog
-
-RUN (crontab -l 2>/dev/null; echo "1 * * * * /etc/init.d/rsyslog restart > /dev/null 2>&1") | crontab -
-
-RUN /etc/init.d/rsyslog restart
-
 CMD ["/bin/bash", "/opt/start.sh", "-d"]
